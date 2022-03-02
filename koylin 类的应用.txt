@@ -1,0 +1,22 @@
+package com.example.learnkotlin
+
+class Person1 {
+    var content: String=""
+    fun listen(content:String){
+        this.content=content
+    }
+    fun speak(){
+        if(content=="hello"){
+            println("你好")
+        }
+        else{
+            println("我没听懂")
+        }
+    }
+
+}
+fun main(){
+    var p=Person1()
+    p.listen( "hello")
+    p.speak()
+}
