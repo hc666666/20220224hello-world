@@ -1,0 +1,130 @@
+inverted_index = {}  # 字典，用于保存倒排索引
+
+  
+
+  
+def create_index(index_file):  # 根据倒排索引文件创建倒排索引，参数为倒排索引文件
+
+    with open(index_file, "r") as f:
+
+        for line in f:
+
+            tokens = line.split()  # 将一行文本分解成词条序列
+
+            term = tokens[0]  # 第一个词条为词项
+
+            posting = []  # 列表，用于保存倒排记录表
+
+  
+
+            for i in range(1, len(tokens)):  # 第二个词条开始为文档id
+
+                posting.append(int(tokens[i]))  # 在列表中追加文档id
+
+  
+
+            inverted_index[term] = posting  # 将词项和该词项的倒排记录表添加到字典(即倒排索引)中
+
+  
+
+  
+def get_posting(term):  # 从倒排索引获取词项对应的倒排记录表
+
+    posting = []
+
+    if term in inverted_index:  # 若词项在字典中
+
+        posting = inverted_index[term]  # 获取词项(键)对应的倒排记录表(值)
+
+  
+
+    return posting
+
+  
+
+  
+
+  def intersect(p1, p2):  # 执行倒排记录表的合并操作（AND查询）
+
+    answer = []
+
+    # 列表，用于保存合并操作结果
+
+    # 在此添加你的代码22222222
+
+    temp=0
+
+    for i in p2:
+
+        for j in p1:
+
+            if (i ==j):
+
+                temp=temp+1
+
+        if(temp==1):
+
+            answer.append(i)
+
+        temp = 0
+
+  
+
+  
+
+    return answer
+
+  
+
+  
+
+  def union(p1, p2):  # 执行倒排记录表的并集操作（OR查询）
+
+    answer = []  # 列表，用于保存并集操作结果
+
+    # 在此添加你的代码111111
+
+    answer = p1
+
+    temp = 0
+
+    for i in p2:
+
+        for j in answer:
+
+            if (i == j):
+
+                temp = temp + 1
+
+        if (temp == 0):
+
+            answer.append(i)
+
+        temp = 0
+
+    sorted(answer)
+
+    return answer
+
+  
+
+  if __name__ == '__main__':  # main函数
+
+    create_index("E:/智能信息检索/inverted_index.txt")  # 读取倒排索引文件生成倒排索引
+
+    p1 = get_posting("information")  # 根据词项(参数)从倒排索引获取该词项的倒排记录表
+
+    p2 = get_posting("retrieval")  # 根据词项(参数)从倒排索引获取该词项的倒排记录表
+
+  
+
+    answer = intersect(p1, p2)  # 对两个倒排记录表执行合并操作(AND查询)
+
+    print('合并操作(AND查询)的结果:',answer)  # 输出合并操作(AND查询)的结果
+
+  
+
+    answer = union(p1, p2)  # 对两个倒排记录表执行并集操作(OR查询)
+
+    print('并集操作(OR查询)的结果:',answer)  # 输出并集操作(OR查询)的结果
+
