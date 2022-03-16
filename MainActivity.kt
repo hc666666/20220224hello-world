@@ -1,45 +1,47 @@
-package com.example.learnintent
+package com.example.mainactivity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import com.example.mainactivity.InfoActivity
 
 class MainActivity : AppCompatActivity() {
 
-    val requestFromLogin = 1
-    var loginStatusCode = false
-    lateinit var loginStatusText: TextView
-    lateinit var loginBtn: Button
+    val requestFrominfo = 1
+    var infoStatusCode = false
+    lateinit var infoStatusText: TextView
+    lateinit var infoBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        loginBtn = findViewById(R.id.login_btn)
-        loginStatusText = findViewById(R.id.login_status_text)
+        infoBtn = findViewById(R.id.back_btn)
+        infoStatusText = findViewById(R.id.infotext_title)
 
-        loginBtn.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
+        infoBtn.setOnClickListener {
+            val intent = Intent(this, InfoActivity::class.java)
             intent.putExtra("user_name", "Tom")
             intent.putExtra("user_age", 10)
+            intent.putExtra("user_sex","男")
             //startActivity(intent)
-            startActivityForResult(intent, requestFromLogin)
+            startActivityForResult(intent, requestFrominfo)
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            requestFromLogin -> if (resultCode == RESULT_OK) {
-                val log_status = data?.getBooleanExtra("login_status", false)
-                if (log_status == true) {
-                    loginStatusCode = log_status
+            requestFrominfo -> if (resultCode == RESULT_OK) {
+                val info_status = data?.getBooleanExtra("info_status", false)
+                if (info_status == true) {
+                    infoStatusCode = info_status
                 }
             }
         }
-        loginStatusText.text = if (loginStatusCode) "已登录" else "未登录"
+        infoStatusText.text = if (infoStatusCode) "已登录" else "未登录"
 
     }
 }
